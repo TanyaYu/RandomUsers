@@ -1,5 +1,9 @@
 package com.example.tanyayuferova.randomusers.entity;
 
+import android.text.TextUtils;
+
+import com.example.tanyayuferova.randomusers.StringUtils;
+
 /**
  * User entity
  * Created by Tanya Yuferova on 5/22/2017.
@@ -25,7 +29,7 @@ public class User {
     }
 
     public String getFirstName() {
-        return firstName;
+        return StringUtils.firstSymbolToUpperCase(firstName);
     }
 
     public void setFirstName(String firstName) {
@@ -41,7 +45,7 @@ public class User {
     }
 
     public String getLastName() {
-        return lastName;
+        return StringUtils.firstSymbolToUpperCase(lastName);
     }
 
     public void setLastName(String lastName) {
@@ -89,6 +93,6 @@ public class User {
     }
 
     public String getFullName() {
-        return firstName + " " + lastName;
+        return getFirstName() + " " + getLastName();
     }
 }

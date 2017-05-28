@@ -1,5 +1,7 @@
 package com.example.tanyayuferova.randomusers.entity;
 
+import com.example.tanyayuferova.randomusers.StringUtils;
+
 /**
  * User location entity
  * Created by Tanya Yuferova on 5/22/2017.
@@ -23,7 +25,7 @@ public class Location {
     }
 
     public String getStreet() {
-        return street;
+        return StringUtils.allWordsFirstSymbolsToUpperCase(street);
     }
 
     public void setStreet(String street) {
@@ -31,7 +33,7 @@ public class Location {
     }
 
     public String getCity() {
-        return city;
+        return StringUtils.firstSymbolToUpperCase(city);
     }
 
     public void setCity(String city) {
@@ -39,7 +41,7 @@ public class Location {
     }
 
     public String getState() {
-        return state;
+        return StringUtils.firstSymbolToUpperCase(state);
     }
 
     public void setState(String state) {
@@ -53,4 +55,9 @@ public class Location {
     public void setPostCode(String postCode) {
         this.postCode = postCode;
     }
+
+    public String getFullDescription(){
+        return getStreet() + " " + getCity() + ", " + getState() + " " + getPostCode();
+    }
+
 }

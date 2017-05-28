@@ -2,6 +2,7 @@ package com.example.tanyayuferova.randomusers.dataAdapter;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -30,8 +31,12 @@ public class UsersDataAdapter<T extends User> extends ArrayAdapter<T> {
 
         LinearLayout.LayoutParams linearLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewParams.gravity = Gravity.CENTER_VERTICAL;
+        LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams(150, 150);
+        imageViewParams.setMargins(0, 5, 10, 5);
+
 
         LinearLayout linearLayout = (LinearLayout) convertView;
 
@@ -49,7 +54,7 @@ public class UsersDataAdapter<T extends User> extends ArrayAdapter<T> {
         imageView = (ImageView) linearLayout.getChildAt(0);
         if(imageView == null){
             imageView = new ImageView(getContext());
-            linearLayout.addView(imageView, 0, viewParams);
+            linearLayout.addView(imageView, 0, imageViewParams);
         }
         imageView.setImageBitmap(item.getPhoto().getThumbnail() );
 
@@ -57,7 +62,8 @@ public class UsersDataAdapter<T extends User> extends ArrayAdapter<T> {
         textView = (TextView) linearLayout.getChildAt(1);
         if(textView == null){
             textView = new TextView(getContext());
-            linearLayout.addView(textView, 1, viewParams);
+            linearLayout.addView(textView, 1, textViewParams);
+            textView.setTextSize(20);
         }
         textView.setText(item.getFullName());
 

@@ -28,7 +28,7 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     public static String LOG_TAG = MainActivity.class.getName();
-    public static final String urlString = "https://randomuser.me/api/?format=json";
+    public static final String urlString = "https://randomuser.me/api/?format=json&nat=us,fr,gb";
     protected static final int USERS_AMOUNT = 100;
 
     protected GridView gridView;
@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, UserBrowse.class);
         intent.putExtra("fullName", user.getFullName());
         intent.putExtra("photo", user.getPhoto().getLarge());
+        intent.putExtra("email", user.getEmail());
+        intent.putExtra("phone", user.getPhone());
+        intent.putExtra("nationality", user.getNationality());
+        intent.putExtra("location", user.getLocation().getFullDescription());
         startActivity(intent);
     }
 
@@ -102,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 String email = result.getString("email");
                 String gender = result.getString("gender");
                 String phone = result.getString("phone"); //todo or cell
+                String nat = result.getString("nat");
                 JSONObject photo = result.getJSONObject("picture");
 
                 JSONObject jLocation = result.getJSONObject("location");
@@ -113,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 user.setGender(gender);
                 user.setLocation(location);
                 user.setPhone(phone);
+                user.setNationality(nat);
                 user.setPhoto(new Photo());
                 user.getPhoto().setThumbnail(loadBitmap(photo.getString("thumbnail")));
                 user.getPhoto().setMedium(loadBitmap(photo.getString("medium")));
