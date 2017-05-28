@@ -2,6 +2,7 @@ package com.example.tanyayuferova.randomusers;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,5 +40,11 @@ public class UserBrowse extends AppCompatActivity {
 
     public void backBtnOnClick(View view){
         finish();
+    }
+
+    public void openDialer(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:"+getIntent().getStringExtra("phone")));
+        startActivity(intent);
     }
 }
