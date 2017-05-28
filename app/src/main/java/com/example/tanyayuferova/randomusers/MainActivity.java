@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 
 import com.example.tanyayuferova.randomusers.dataAdapter.UsersDataAdapter;
 import com.example.tanyayuferova.randomusers.entity.Location;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected static final int USERS_AMOUNT = 100;
 
     protected GridView gridView;
+    protected ProgressBar progressBar;
     protected UsersDataAdapter adapter;
 
     @Override
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gridView = (GridView) findViewById(R.id.gridView);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         initDataAdapter();
         initClickListener();
@@ -146,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(User user) {
             super.onPostExecute(user);
             adapter.add(user);
+            if(adapter.getCount() == USERS_AMOUNT)
+                stopProgressBar();
         }
     }
 
@@ -154,9 +159,14 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1);
         gridView.setAdapter(adapter);
 
+        progressBar.setVisibility(ProgressBar.VISIBLE);
         int c = 0;
         while (c++ < USERS_AMOUNT){
             new ParseJsonUser().execute();
         }
+    }
+
+    protected void stopProgressBar() {
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
     }
 }

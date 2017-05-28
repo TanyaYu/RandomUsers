@@ -5,4 +5,5 @@
     <string name="User.phone">Phone number:</string>
     <string name="User.nationality">Nationality:</string>
     <string name="User.location">Location:</string>
+    <string name="backBtnCaprion">Back</string>
 </resources>

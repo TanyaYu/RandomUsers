@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,5 +35,9 @@ public class UserBrowse extends AppCompatActivity {
         phone.setText(intent.getStringExtra("phone"));
         nationality.setText(intent.getStringExtra("nationality"));
         location.setText(intent.getStringExtra("location"));
+    }
+
+    public void backBtnOnClick(View view){
+        finish();
     }
 }

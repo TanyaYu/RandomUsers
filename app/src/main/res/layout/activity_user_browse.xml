@@ -130,5 +130,13 @@
                     />
             </TableRow>
         </TableLayout>
+
+        <!-- Back button -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backBtn"
+            android:text="@string/backBtnCaprion"
+            android:onClick="backBtnOnClick"/>
     </LinearLayout>
 </RelativeLayout>
