@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="user" type="com.example.tanyayuferova.randomusers.entity.User"/>
+    </data>
+    <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_user_browse"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -48,6 +51,7 @@
 
                 <TextView
                     android:id="@+id/fullName"
+                    android:text="@{user.fullName}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/user_browse_text_size" />
@@ -67,9 +71,13 @@
 
                 <TextView
                     android:id="@+id/email"
+                    android:text="@{user.email}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/user_browse_text_size" />
+                    android:textSize="@dimen/user_browse_text_size"
+                    android:textColor="@color/colorAccent"
+                    android:clickable="true"
+                    android:onClick="emailOnClick"/>
             </TableRow>
 
             <!-- Telephone -->
@@ -90,6 +98,7 @@
 
                     <TextView
                         android:id="@+id/phone"
+                        android:text="@{user.phone}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/user_browse_text_size" />
@@ -118,6 +127,7 @@
 
                 <TextView
                     android:id="@+id/nationality"
+                    android:text="@{user.nationality}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/user_browse_text_size" />
@@ -137,6 +147,7 @@
 
                 <TextView
                     android:id="@+id/location"
+                    android:text="@{user.location.fullDescription}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/user_browse_text_size"
@@ -153,3 +164,4 @@
             android:onClick="backBtnOnClick"/>
     </LinearLayout>
 </RelativeLayout>
+</layout>

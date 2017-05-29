@@ -49,12 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected  void startUserBrowseActivity(User user, int position){
         Intent intent = new Intent(this, UserBrowse.class);
-        intent.putExtra("fullName", user.getFullName());
-        intent.putExtra("photo", user.getPhoto().getLarge());
-        intent.putExtra("email", user.getEmail());
-        intent.putExtra("phone", user.getPhone());
-        intent.putExtra("nationality", user.getNationality());
-        intent.putExtra("location", user.getLocation().getFullDescription());
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 

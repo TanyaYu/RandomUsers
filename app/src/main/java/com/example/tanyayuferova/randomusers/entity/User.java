@@ -1,6 +1,8 @@
 package com.example.tanyayuferova.randomusers.entity;
 
 import android.text.TextUtils;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.example.tanyayuferova.randomusers.StringUtils;
 
@@ -9,7 +11,7 @@ import com.example.tanyayuferova.randomusers.StringUtils;
  * Created by Tanya Yuferova on 5/22/2017.
  */
 
-public class User {
+public class User implements Parcelable {
 
     private String firstName;
     private String lastName;
@@ -27,6 +29,45 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    public User(Parcel in) {
+        String[] data = new String[6];
+        in.readStringArray(data);
+        firstName = data[0];
+        lastName = data[1];
+        email = data[2];
+        gender = data[3];
+        nationality = data[4];
+        phone = data[5];
+
+        location = in.readParcelable(Location.class.getClassLoader());
+        photo = in.readParcelable(Photo.class.getClassLoader());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[] { firstName, lastName, email, gender, nationality, phone });
+        dest.writeParcelable(location, 0);
+        dest.writeParcelable(photo, 1);
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getFirstName() {
         return StringUtils.firstSymbolToUpperCase(firstName);

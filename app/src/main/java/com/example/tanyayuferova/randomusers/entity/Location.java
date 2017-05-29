@@ -1,13 +1,15 @@
 package com.example.tanyayuferova.randomusers.entity;
 
 import com.example.tanyayuferova.randomusers.StringUtils;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * User location entity
  * Created by Tanya Yuferova on 5/22/2017.
  */
 
-public class Location {
+public class Location implements Parcelable {
 
     private String street;
     private String city;
@@ -23,6 +25,38 @@ public class Location {
         this.state = state;
         this.postCode = postCode;
     }
+
+    public Location(Parcel in) {
+        String[] data = new String[4];
+        in.readStringArray(data);
+        street = data[0];
+        city = data[1];
+        state = data[2];
+        postCode = data[3];
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[] { street, city, state, postCode });
+    }
+
+    public static final Parcelable.Creator<Location> CREATOR = new Parcelable.Creator<Location>() {
+
+        @Override
+        public Location createFromParcel(Parcel source) {
+            return new Location(source);
+        }
+
+        @Override
+        public Location[] newArray(int size) {
+            return new Location[size];
+        }
+    };
 
     public String getStreet() {
         return StringUtils.allWordsFirstSymbolsToUpperCase(street);

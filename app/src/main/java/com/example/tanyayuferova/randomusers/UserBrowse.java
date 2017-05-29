@@ -1,41 +1,35 @@
 package com.example.tanyayuferova.randomusers;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.example.tanyayuferova.randomusers.databinding.ActivityUserBrowseBinding;
+import com.example.tanyayuferova.randomusers.entity.User;
 
 public class UserBrowse extends AppCompatActivity {
-    protected TextView fullName;
-    protected ImageView photo;
-    protected TextView email;
-    protected TextView phone;
-    protected TextView nationality;
-    protected TextView location;
+
+    protected User user;
+    protected ActivityUserBrowseBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_browse);
-        fullName = (TextView) findViewById(R.id.fullName);
-        photo = (ImageView) findViewById(R.id.photo);
-        email = (TextView) findViewById(R.id.email);
-        phone = (TextView) findViewById(R.id.phone);
-        nationality = (TextView) findViewById(R.id.nationality);
-        location = (TextView) findViewById(R.id.location);
 
-        Intent intent = getIntent();
+        user = getIntent().getParcelableExtra("user");
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_user_browse);
+        binding.setUser(user);
 
-        fullName.setText(intent.getStringExtra("fullName"));
-        photo.setImageBitmap((Bitmap) intent.getParcelableExtra("photo"));
-        email.setText(intent.getStringExtra("email"));
-        phone.setText(intent.getStringExtra("phone"));
-        nationality.setText(intent.getStringExtra("nationality"));
-        location.setText(intent.getStringExtra("location"));
+        ((ImageView) findViewById(R.id.photo)).setImageBitmap(user.getPhoto().getLarge());
     }
 
     public void backBtnOnClick(View view){
@@ -44,7 +38,33 @@ public class UserBrowse extends AppCompatActivity {
 
     public void openDialer(View view) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:"+getIntent().getStringExtra("phone")));
+        intent.setData(Uri.parse("tel:"+user.getPhone()));
         startActivity(intent);
+    }
+
+    public void emailOnClick(View view) {
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.email_dialog, null);
+        AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(this);
+        mDialogBuilder.setView(promptsView);
+        final EditText email = (EditText) promptsView.findViewById(R.id.email);
+
+        mDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialog = mDialogBuilder.create();
+        alertDialog.show();
     }
 }
