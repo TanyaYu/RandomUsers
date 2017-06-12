@@ -1,6 +1,6 @@
 package com.example.tanyayuferova.randomusers.entity;
 
-import com.example.tanyayuferova.randomusers.StringUtils;
+import com.example.tanyayuferova.randomusers.utils.StringUtils;
 import android.os.Parcel;
 import android.os.Parcelable;
 

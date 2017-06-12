@@ -1,10 +1,9 @@
 package com.example.tanyayuferova.randomusers.entity;
 
-import android.text.TextUtils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.tanyayuferova.randomusers.StringUtils;
+import com.example.tanyayuferova.randomusers.utils.StringUtils;
 
 /**
  * User entity
@@ -20,7 +19,9 @@ public class User implements Parcelable {
     private String nationality;
     private String phone;
     private Location location;
-    private Photo photo;
+    private Photo photoLarge;
+    private Photo photoMedium;
+    private Photo photoThumbnail;
 
     public User() {
     }
@@ -41,7 +42,13 @@ public class User implements Parcelable {
         phone = data[5];
 
         location = in.readParcelable(Location.class.getClassLoader());
-        photo = in.readParcelable(Photo.class.getClassLoader());
+
+        Object[] photo = new Object[3];
+        photo = in.readArray(Photo.class.getClassLoader());
+        photoLarge = (Photo) photo[0];
+        photoMedium = (Photo) photo[1];
+        photoThumbnail = (Photo) photo[2];
+
     }
 
     @Override
@@ -52,8 +59,8 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[] { firstName, lastName, email, gender, nationality, phone });
-        dest.writeParcelable(location, 0);
-        dest.writeParcelable(photo, 1);
+        dest.writeParcelable(location, flags);
+        dest.writeArray(new Object[] { photoLarge, photoMedium, photoThumbnail });
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
@@ -101,12 +108,28 @@ public class User implements Parcelable {
         this.gender = gender;
     }
 
-    public Photo getPhoto() {
-        return photo;
+    public Photo getPhotoThumbnail() {
+        return photoThumbnail;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setPhotoThumbnail(Photo photoThumbnail) {
+        this.photoThumbnail = photoThumbnail;
+    }
+
+    public Photo getPhotoMedium() {
+        return photoMedium;
+    }
+
+    public void setPhotoMedium(Photo photoMedium) {
+        this.photoMedium = photoMedium;
+    }
+
+    public Photo getPhotoLarge() {
+        return photoLarge;
+    }
+
+    public void setPhotoLarge(Photo photoLarge) {
+        this.photoLarge = photoLarge;
     }
 
     public String getNationality() {

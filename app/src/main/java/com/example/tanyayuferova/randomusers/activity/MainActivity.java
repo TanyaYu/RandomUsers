@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.randomusers;
+package com.example.tanyayuferova.randomusers.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 
+import com.example.tanyayuferova.randomusers.R;
 import com.example.tanyayuferova.randomusers.dataAdapter.UsersDataAdapter;
 import com.example.tanyayuferova.randomusers.entity.Location;
 import com.example.tanyayuferova.randomusers.entity.Photo;
@@ -28,7 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-    public static String LOG_TAG = MainActivity.class.getName();
+    public static String LOG_TAG = MainActivity.class.getSimpleName();
     public static final String urlString = "https://randomuser.me/api/?format=json&nat=us,fr,gb";
     protected static final int USERS_AMOUNT = 100;
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected  void startUserBrowseActivity(User user, int position){
-        Intent intent = new Intent(this, UserBrowse.class);
+        Intent intent = new Intent(this, UserDetailsBrowse.class);
         intent.putExtra("user", user);
         startActivity(intent);
     }
@@ -117,10 +118,12 @@ public class MainActivity extends AppCompatActivity {
                 user.setLocation(location);
                 user.setPhone(phone);
                 user.setNationality(nat);
-                user.setPhoto(new Photo());
-                user.getPhoto().setThumbnail(loadBitmap(photo.getString("thumbnail")));
-                user.getPhoto().setMedium(loadBitmap(photo.getString("medium")));
-                user.getPhoto().setLarge(loadBitmap(photo.getString("large")));
+                String large = photo.getString("large"),
+                        medium = photo.getString("medium"),
+                        thumbnail = photo.getString("thumbnail");
+                user.setPhotoLarge(new Photo(large, loadBitmap(large)));
+                user.setPhotoMedium(new Photo(medium, loadBitmap(medium)));
+                user.setPhotoThumbnail(new Photo(thumbnail, loadBitmap(thumbnail)));
 
             } catch (JSONException e) {
                 e.printStackTrace();

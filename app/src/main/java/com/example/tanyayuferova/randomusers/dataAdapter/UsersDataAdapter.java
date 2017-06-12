@@ -56,7 +56,7 @@ public class UsersDataAdapter<T extends User> extends ArrayAdapter<T> {
             imageView = new ImageView(getContext());
             linearLayout.addView(imageView, 0, imageViewParams);
         }
-        imageView.setImageBitmap(item.getPhoto().getThumbnail() );
+        imageView.setImageBitmap(item.getPhotoThumbnail().getBitmap());
 
         //Full Name
         textView = (TextView) linearLayout.getChildAt(1);

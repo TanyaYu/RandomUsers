@@ -11,19 +11,20 @@ import android.os.Parcelable;
 
 public class Photo implements Parcelable {
 
-    private Bitmap thumbnail;
-    private Bitmap medium;
-    private Bitmap large;
+    private Bitmap bitmap;
+    private String urlString;
 
     public Photo() {
     }
 
+    public Photo(String urlString, Bitmap bitmap) {
+        this.bitmap = bitmap;
+        this.urlString = urlString;
+    }
+
     public Photo(Parcel in) {
-        Object[] data = new Object[3];
-        data = in.readArray(Bitmap.class.getClassLoader());
-        thumbnail = (Bitmap) data[0];
-        medium = (Bitmap) data[1];
-        large = (Bitmap) data[2];
+        bitmap = in.readParcelable(Bitmap.class.getClassLoader());
+        urlString = in.readString();
     }
 
     @Override
@@ -33,7 +34,8 @@ public class Photo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeArray(new Object[] { thumbnail, medium, large });
+        dest.writeParcelable(bitmap, flags);
+        dest.writeString(urlString);
     }
 
     public static final Parcelable.Creator<Photo> CREATOR = new Parcelable.Creator<Photo>() {
@@ -49,27 +51,19 @@ public class Photo implements Parcelable {
         }
     };
 
-    public Bitmap getThumbnail() {
-        return thumbnail;
+    public Bitmap getBitmap() {
+        return bitmap;
     }
 
-    public void setThumbnail(Bitmap thumbnail) {
-        this.thumbnail = thumbnail;
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
-    public Bitmap getMedium() {
-        return medium;
+    public String getUrlString() {
+        return urlString;
     }
 
-    public void setMedium(Bitmap medium) {
-        this.medium = medium;
-    }
-
-    public Bitmap getLarge() {
-        return large;
-    }
-
-    public void setLarge(Bitmap large) {
-        this.large = large;
+    public void setUrlString(String urlString) {
+        this.urlString = urlString;
     }
 }

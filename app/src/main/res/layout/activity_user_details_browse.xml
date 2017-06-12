@@ -12,7 +12,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.tanyayuferova.randomusers.UserBrowse">
+    tools:context="com.example.tanyayuferova.randomusers.activity.UserDetailsBrowse">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -155,13 +155,25 @@
             </TableRow>
         </TableLayout>
 
-        <!-- Back button -->
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/backBtn"
-            android:text="@string/backBtnCaprion"
-            android:onClick="backBtnOnClick"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- Back button -->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/backBtn"
+                android:text="@string/backBtnCaprion"
+                android:onClick="backBtnOnClick"/>
+            <!-- Send user info button -->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sendUserInfoBtn"
+                android:text="@string/sendUserInfo"
+                android:onClick="sendUserInfoBtnOnClick"/>
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>
 </layout>

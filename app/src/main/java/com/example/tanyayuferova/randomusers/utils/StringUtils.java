@@ -1,4 +1,4 @@
-package com.example.tanyayuferova.randomusers;
+package com.example.tanyayuferova.randomusers.utils;
 
 /**
  * Created by Tanya Yuferova on 5/28/2017.
