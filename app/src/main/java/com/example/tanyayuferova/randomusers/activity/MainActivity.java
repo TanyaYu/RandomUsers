@@ -68,7 +68,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected User doInBackground(Void... params) {
-            String resultJson = "";
+            String json = getNextJson();
+            if (json == null){
+                return null;
+            }
+            return readUser(json);
+        }
+
+        private String getNextJson() {
+            String resultJson = null;
             try {
                 URL url = new URL(urlString);
 
@@ -88,14 +96,17 @@ public class MainActivity extends AppCompatActivity {
                 resultJson = buffer.toString();
 
             } catch (Exception e) {
+                Log.e(LOG_TAG, e.getMessage());
                 e.printStackTrace();
             }
+            return resultJson;
+        }
 
-            JSONObject dataJsonObj = null;
+        private User readUser(String jsonString) {
             User user = null;
 
             try {
-                dataJsonObj = new JSONObject(resultJson);
+                JSONObject dataJsonObj = new JSONObject(jsonString);
                 JSONArray results = dataJsonObj.getJSONArray("results");
 
                 JSONObject result = results.getJSONObject(0);
@@ -126,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 user.setPhotoThumbnail(new Photo(thumbnail, loadBitmap(thumbnail)));
 
             } catch (JSONException e) {
+                Log.e(LOG_TAG, e.getMessage());
                 e.printStackTrace();
             }
             return user;
