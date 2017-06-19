@@ -1,8 +1,6 @@
 package com.example.tanyayuferova.randomusers.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,10 +25,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static String LOG_TAG = MainActivity.class.getSimpleName();
-    public static final String urlString = "https://randomuser.me/api/?format=json&nat=us,fr,gb";
+    public static final String urlString = "https://randomuser.me/api/?format=json&nat=us,fr,gb&results=100";
     protected static final int USERS_AMOUNT = 100;
 
     protected GridView gridView;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         initClickListener();
     }
 
-    protected  void startUserBrowseActivity(User user, int position){
+    protected void startUserBrowseActivity(User user){
         Intent intent = new Intent(this, UserDetailsBrowse.class);
         intent.putExtra("user", user);
         startActivity(intent);
@@ -59,23 +59,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = (User) parent.getItemAtPosition(position);
-                startUserBrowseActivity(user, position);
+                startUserBrowseActivity(user);
             }
         });
     }
 
-    private class ParseJsonUser extends AsyncTask<Void, Void, User> {
+    private class ParseJsonUsers extends AsyncTask<Void, Void, List<User>> {
 
         @Override
-        protected User doInBackground(Void... params) {
-            String json = getNextJson();
-            if (json == null){
-                return null;
+        protected List<User> doInBackground(Void... params) {
+            List<User> result = new ArrayList<>();
+            String json = getJson();
+            if (json != null){
+                result = readUsers(json);
             }
-            return readUser(json);
+            return result;
         }
 
-        private String getNextJson() {
+        private String getJson() {
             String resultJson = null;
             try {
                 URL url = new URL(urlString);
@@ -102,24 +103,19 @@ public class MainActivity extends AppCompatActivity {
             return resultJson;
         }
 
-        private User readUser(String jsonString) {
+        private User readUser(JSONObject jsonObject) {
             User user = null;
-
             try {
-                JSONObject dataJsonObj = new JSONObject(jsonString);
-                JSONArray results = dataJsonObj.getJSONArray("results");
-
-                JSONObject result = results.getJSONObject(0);
-                JSONObject name = result.getJSONObject("name");
+                JSONObject name = jsonObject.getJSONObject("name");
                 String firstName = name.getString("first");
                 String lastName = name.getString("last");
-                String email = result.getString("email");
-                String gender = result.getString("gender");
-                String phone = result.getString("phone"); //todo or cell
-                String nat = result.getString("nat");
-                JSONObject photo = result.getJSONObject("picture");
+                String email = jsonObject.getString("email");
+                String gender = jsonObject.getString("gender");
+                String phone = jsonObject.getString("phone");
+                String nat = jsonObject.getString("nat");
+                JSONObject photo = jsonObject.getJSONObject("picture");
 
-                JSONObject jLocation = result.getJSONObject("location");
+                JSONObject jLocation = jsonObject.getJSONObject("location");
                 Location location = new Location(jLocation.getString("street"), jLocation.getString("city"),
                         jLocation.getString("city"), jLocation.getString("city"));
 
@@ -132,10 +128,9 @@ public class MainActivity extends AppCompatActivity {
                 String large = photo.getString("large"),
                         medium = photo.getString("medium"),
                         thumbnail = photo.getString("thumbnail");
-                user.setPhotoLarge(new Photo(large, loadBitmap(large)));
-                user.setPhotoMedium(new Photo(medium, loadBitmap(medium)));
-                user.setPhotoThumbnail(new Photo(thumbnail, loadBitmap(thumbnail)));
-
+                user.setPhotoLarge(new Photo(large));
+                user.setPhotoMedium(new Photo(medium));
+                user.setPhotoThumbnail(new Photo(thumbnail));
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage());
                 e.printStackTrace();
@@ -143,24 +138,29 @@ public class MainActivity extends AppCompatActivity {
             return user;
         }
 
-        Bitmap loadBitmap(String url){
-            Bitmap bitmap = null;
+        private List<User> readUsers(String jsonString) {
+            List<User> users = new ArrayList<>();
             try {
-                InputStream in = new java.net.URL(url).openStream();
-                bitmap = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
+                JSONObject dataJsonObj = new JSONObject(jsonString);
+                JSONArray results = dataJsonObj.getJSONArray("results");
+
+                for(int i = 0; i < USERS_AMOUNT; i++) {
+                    JSONObject result = results.getJSONObject(i);
+                    users.add(readUser(result));
+                }
+
+            } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage());
                 e.printStackTrace();
             }
-            return bitmap;
+            return users;
         }
 
         @Override
-        protected void onPostExecute(User user) {
-            super.onPostExecute(user);
-            adapter.add(user);
-            if(adapter.getCount() == USERS_AMOUNT)
-                stopProgressBar();
+        protected void onPostExecute(List<User> users) {
+            super.onPostExecute(users);
+            adapter.addAll(users);
+            stopProgressBar();
         }
     }
 
@@ -170,10 +170,7 @@ public class MainActivity extends AppCompatActivity {
         gridView.setAdapter(adapter);
 
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        int c = 0;
-        while (c++ < USERS_AMOUNT){
-            new ParseJsonUser().execute();
-        }
+        new ParseJsonUsers().execute();
     }
 
     protected void stopProgressBar() {

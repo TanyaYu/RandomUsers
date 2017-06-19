@@ -16,6 +16,7 @@ import com.example.tanyayuferova.randomusers.R;
 import com.example.tanyayuferova.randomusers.databinding.ActivityUserDetailsBrowseBinding;
 import com.example.tanyayuferova.randomusers.emailer.UserInfoEmailSender;
 import com.example.tanyayuferova.randomusers.entity.User;
+import com.squareup.picasso.Picasso;
 
 public class UserDetailsBrowse extends AppCompatActivity {
 
@@ -30,8 +31,8 @@ public class UserDetailsBrowse extends AppCompatActivity {
         user = getIntent().getParcelableExtra("user");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_details_browse);
         binding.setUser(user);
-
-        ((ImageView) findViewById(R.id.photo)).setImageBitmap(user.getPhotoLarge().getBitmap());
+        Picasso.with(this).load(user.getPhotoLarge().getUrlString())
+                .into((ImageView) findViewById(R.id.photo));
     }
 
     public void backBtnOnClick(View view) {

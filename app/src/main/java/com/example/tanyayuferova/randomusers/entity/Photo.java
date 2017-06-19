@@ -11,14 +11,15 @@ import android.os.Parcelable;
 
 public class Photo implements Parcelable {
 
+    /* fixme bitmap is not used */
+    @Deprecated
     private Bitmap bitmap;
     private String urlString;
 
     public Photo() {
     }
 
-    public Photo(String urlString, Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public Photo(String urlString) {
         this.urlString = urlString;
     }
 
@@ -51,10 +52,11 @@ public class Photo implements Parcelable {
         }
     };
 
+    @Deprecated
     public Bitmap getBitmap() {
         return bitmap;
     }
-
+    @Deprecated
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
