@@ -1,17 +1,19 @@
 package com.example.tanyayuferova.randomusers.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 
 import com.example.tanyayuferova.randomusers.R;
 import com.example.tanyayuferova.randomusers.dataAdapter.UsersDataAdapter;
+import com.example.tanyayuferova.randomusers.databinding.ListItemBinding;
 import com.example.tanyayuferova.randomusers.entity.Location;
 import com.example.tanyayuferova.randomusers.entity.Photo;
 import com.example.tanyayuferova.randomusers.entity.User;
@@ -33,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String urlString = "https://randomuser.me/api/?format=json&nat=us,fr,gb&results=100";
     protected static final int USERS_AMOUNT = 100;
 
-    protected GridView gridView;
+    protected RecyclerView recyclerView;
+    protected RecyclerView.LayoutManager mLayoutManager;
+
     protected ProgressBar progressBar;
     protected UsersDataAdapter adapter;
 
@@ -41,11 +45,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        gridView = (GridView) findViewById(R.id.gridView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        initRecyclerView();
         initDataAdapter();
-        initClickListener();
+    }
+
+    protected void initRecyclerView() {
+        recyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
     }
 
     protected void startUserBrowseActivity(User user){
@@ -54,14 +65,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected void initClickListener(){
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    protected View.OnClickListener getOnItemClickListener(){
+        return new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                User user = (User) parent.getItemAtPosition(position);
-                startUserBrowseActivity(user);
+            public void onClick(View view) {
+                ListItemBinding binding =  DataBindingUtil.findBinding(view);
+                startUserBrowseActivity(binding.getUser());
             }
-        });
+        };
     }
 
     private class ParseJsonUsers extends AsyncTask<Void, Void, List<User>> {
@@ -165,9 +176,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void initDataAdapter(){
-        adapter = new UsersDataAdapter(getApplicationContext(),
-                android.R.layout.simple_list_item_1);
-        gridView.setAdapter(adapter);
+        adapter = new UsersDataAdapter(getApplicationContext());
+        adapter.setOnItemClickListener(getOnItemClickListener());
+        recyclerView.setAdapter(adapter);
 
         progressBar.setVisibility(ProgressBar.VISIBLE);
         new ParseJsonUsers().execute();

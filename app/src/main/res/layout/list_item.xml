@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="150px"
-        android:layout_height="150px"
-        android:layout_marginBottom="10px"
-        android:layout_marginLeft="5px"
-        android:layout_marginRight="5px"
-        android:layout_marginTop="0px" />
+    <data>
+        <variable name="user" type="com.example.tanyayuferova.randomusers.entity.User"/>
+    </data>
 
-    <TextView
-        android:id="@+id/fullName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"/>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="150px"
+            android:layout_height="150px"
+            android:layout_marginBottom="10px"
+            android:layout_marginLeft="5px"
+            android:layout_marginRight="5px"
+            android:layout_marginTop="0px" />
+
+        <TextView
+            android:id="@+id/fullName"
+            android:text="@{user.fullName}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"/>
+    </LinearLayout>
+</layout>
