@@ -2,9 +2,9 @@
     <string name="app_name">Random Users</string>
     <string name="User.fullName">Full name:</string>
     <string name="User.email">Email:</string>
-    <string name="User.phone">Phone number:</string>
+    <string name="User.phone">Tel.:</string>
     <string name="User.nationality">Nationality:</string>
-    <string name="User.location">Location:</string>
+    <string name="User.location">Address:</string>
     <string name="backBtnCaprion">Back</string>
     <string name="openDialerDescription">Open dialer</string>
     <string name="sendUserInfo">Send user info</string>
