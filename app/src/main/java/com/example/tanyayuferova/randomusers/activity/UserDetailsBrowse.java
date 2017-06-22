@@ -3,6 +3,7 @@ package com.example.tanyayuferova.randomusers.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -31,8 +32,6 @@ public class UserDetailsBrowse extends AppCompatActivity {
         user = getIntent().getParcelableExtra("user");
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_details_browse);
         binding.setUser(user);
-        Picasso.with(this).load(user.getPhotoLarge().getUrlString())
-                .into((ImageView) findViewById(R.id.photo));
     }
 
     public void backBtnOnClick(View view) {
@@ -84,5 +83,10 @@ public class UserDetailsBrowse extends AppCompatActivity {
 
         AlertDialog alertDialog = mDialogBuilder.create();
         alertDialog.show();
+    }
+
+    @BindingAdapter("bind:imageUrl")
+    public static void loadImage(ImageView imageView, String url) {
+        Picasso.with(imageView.getContext()).load(url).into(imageView);
     }
 }

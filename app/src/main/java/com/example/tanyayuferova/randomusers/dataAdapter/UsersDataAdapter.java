@@ -1,6 +1,7 @@
 package com.example.tanyayuferova.randomusers.dataAdapter;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,22 +27,18 @@ public class UsersDataAdapter<T extends User> extends RecyclerView.Adapter<Users
     public static String LOG_TAG = UsersDataAdapter.class.getName();
 
     List<T> data = new ArrayList<>();
-    Context mContext;
     View.OnClickListener onItemClickListener;
 
-    public UsersDataAdapter(Context context) {
+    public UsersDataAdapter() {
         super();
-        mContext=context;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ListItemBinding binding;
-        ImageView photo;
 
         public ViewHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
-            photo = (ImageView)itemView.findViewById(R.id.photo);
         }
 
         public void setUser(User user) {
@@ -65,7 +62,6 @@ public class UsersDataAdapter<T extends User> extends RecyclerView.Adapter<Users
     public void onBindViewHolder(ViewHolder holder, int position) {
         T item = getItem(position);
         holder.setUser(item);
-        Picasso.with(mContext).load(item.getPhotoThumbnail().getUrlString()).into(holder.photo);
     }
 
     @Override
@@ -99,5 +95,10 @@ public class UsersDataAdapter<T extends User> extends RecyclerView.Adapter<Users
 
     public void setOnItemClickListener(View.OnClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    @BindingAdapter("bind:imageUrl")
+    public static void loadImage(ImageView imageView, String url) {
+        Picasso.with(imageView.getContext()).load(url).into(imageView);
     }
 }

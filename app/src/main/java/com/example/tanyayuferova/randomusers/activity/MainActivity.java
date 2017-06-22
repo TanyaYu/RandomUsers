@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void initDataAdapter(){
-        adapter = new UsersDataAdapter(getApplicationContext());
+        adapter = new UsersDataAdapter();
         adapter.setOnItemClickListener(getOnItemClickListener());
         recyclerView.setAdapter(adapter);
 
