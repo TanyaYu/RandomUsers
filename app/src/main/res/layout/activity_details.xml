@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_user_browse"
-    tools:context="com.example.tanyayuferova.randomusers.activity.UserDetailsBrowse">
+    tools:context="com.example.tanyayuferova.randomusers.ui.DetailsActivity">
 
     <data>
         <variable
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            app:imageUrl="@{user.photoLarge.urlString}" />
+            app:imageUrl="@{user.photoLarge}" />
 
         <LinearLayout
             android:layout_width="match_parent"

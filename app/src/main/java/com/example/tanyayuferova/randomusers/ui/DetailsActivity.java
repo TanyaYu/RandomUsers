@@ -1,9 +1,8 @@
-package com.example.tanyayuferova.randomusers.activity;
+package com.example.tanyayuferova.randomusers.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -11,26 +10,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.example.tanyayuferova.randomusers.R;
-import com.example.tanyayuferova.randomusers.databinding.ActivityUserDetailsBrowseBinding;
+import com.example.tanyayuferova.randomusers.databinding.ActivityDetailsBinding;
 import com.example.tanyayuferova.randomusers.emailer.UserInfoEmailSender;
 import com.example.tanyayuferova.randomusers.entity.User;
-import com.squareup.picasso.Picasso;
 
-public class UserDetailsBrowse extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity {
 
-    protected User user;
-    protected ActivityUserDetailsBrowseBinding binding;
+    protected ActivityDetailsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_details_browse);
-
-        user = getIntent().getParcelableExtra("user");
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_user_details_browse);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_details);
+        User user = getIntent().getParcelableExtra(MainActivity.EXTRA_USER);
         binding.setUser(user);
     }
 
@@ -40,12 +34,12 @@ public class UserDetailsBrowse extends AppCompatActivity {
 
     public void openDialer(View view) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + user.getPhone()));
+        intent.setData(Uri.parse("tel:" + binding.getUser().getPhone()));
         startActivity(intent);
     }
 
     public void emailOnClick(View view) {
-        String email = user.getEmail();
+        String email = binding.getUser().getEmail();
         String subject = "Subject";
         String content = "Content";
 
@@ -70,7 +64,7 @@ public class UserDetailsBrowse extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 String email = emailView.getText().toString();
-                                UserInfoEmailSender sender = new UserInfoEmailSender(UserDetailsBrowse.this, user, email);
+                                UserInfoEmailSender sender = new UserInfoEmailSender(DetailsActivity.this, binding.getUser(), email);
                                 sender.execute();
                             }
                         })
@@ -83,10 +77,5 @@ public class UserDetailsBrowse extends AppCompatActivity {
 
         AlertDialog alertDialog = mDialogBuilder.create();
         alertDialog.show();
-    }
-
-    @BindingAdapter("bind:imageUrl")
-    public static void loadImage(ImageView imageView, String url) {
-        Picasso.with(imageView.getContext()).load(url).into(imageView);
     }
 }

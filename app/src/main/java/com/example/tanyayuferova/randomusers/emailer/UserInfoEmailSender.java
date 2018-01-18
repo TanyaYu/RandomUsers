@@ -56,7 +56,7 @@ public class UserInfoEmailSender extends AsyncTask<Object, String, Boolean> {
                     "\nPhone: " + user.getPhone() +
                     "\nAddress: " + user.getLocation().getFullDescription();
 
-            URL photoUrl = new URL(user.getPhotoLarge().getUrlString());
+            URL photoUrl = new URL(user.getPhotoLarge());
 
             EmailSender sender = new EmailSender("user.info.notification@gmail.com", "$user_info_notification");
             result = sender.sendMail(subject, content, from, to, photoUrl, "UserPhoto.jpg");

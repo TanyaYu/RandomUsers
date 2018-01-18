@@ -18,7 +18,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="3dp"
-            app:imageUrl="@{user.photoThumbnail.urlString}"/>
+            app:error="@{@drawable/no_photo}"
+            app:imageUrl="@{user.photoThumbnail}"/>
 
         <TextView
             android:id="@+id/fullName"

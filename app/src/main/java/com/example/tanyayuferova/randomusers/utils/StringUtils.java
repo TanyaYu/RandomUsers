@@ -1,10 +1,12 @@
 package com.example.tanyayuferova.randomusers.utils;
 
+import android.support.annotation.Nullable;
+
 /**
  * Created by Tanya Yuferova on 5/28/2017.
  */
 
-public class StringUtils {
+public final class StringUtils {
 
     /**
      * Sets first symbol of input string to upper case
@@ -27,6 +29,26 @@ public class StringUtils {
             result += firstSymbolToUpperCase(value) + " ";
         }
         return result;
+    }
+
+    /**
+     * Concats string elements using delimiter
+     * @param delimiter
+     * @param elements
+     * @return
+     */
+    @Nullable
+    public static String join(CharSequence delimiter, CharSequence... elements) {
+        if(delimiter == null)
+            throw new NullPointerException("Delimiter must not be null");
+        if(elements == null)
+            throw new NullPointerException("Elements must not be null");
+
+        StringBuilder builder = new StringBuilder();
+        for (CharSequence cs: elements) {
+            builder.append(delimiter).append(cs);
+        }
+        return builder.substring(delimiter.length());
     }
 
 }
