@@ -25,14 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Back button -->
-            <ImageView
-                android:id="@+id/backBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:onClick="backBtnOnClick"
-                android:src="@drawable/back_icon" />
             <!-- Full name -->
             <TextView
                 android:id="@+id/fullName"
@@ -49,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
+            app:error="@{@drawable/ic_empty_user}"
             app:imageUrl="@{user.photoLarge}" />
 
         <LinearLayout
@@ -113,7 +106,7 @@
                         android:layout_gravity="start"
                         android:contentDescription="@string/openDialerDescription"
                         android:onClick="openDialer"
-                        android:src="@drawable/open_dialer"/>
+                        app:srcCompat="@drawable/ic_call"/>
                 </LinearLayout>
             </LinearLayout>
 

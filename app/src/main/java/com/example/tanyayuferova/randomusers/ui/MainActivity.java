@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             protected void onStartLoading() {
-                progressBar.setVisibility(ProgressBar.VISIBLE);
                 if (data != null) {
                     deliverResult(data);
                 } else {
+                    progressBar.setVisibility(ProgressBar.VISIBLE);
                     forceLoad();
                 }
             }

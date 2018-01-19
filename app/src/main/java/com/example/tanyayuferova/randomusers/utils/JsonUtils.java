@@ -116,7 +116,7 @@ public final class JsonUtils {
                     default: reader.skipValue(); break;
                 }
             }
-            reader.close();
+            reader.endObject();
         } catch (IOException e) {
             Log.e(LOG_TAG, e.getMessage());
             e.printStackTrace();
