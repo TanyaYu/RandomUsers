@@ -8,4 +8,5 @@
     <string name="backBtnCaprion">Back</string>
     <string name="openDialerDescription">Open dialer</string>
     <string name="sendUserInfo">Send user info</string>
+    <string name="image_user_photo">User photo</string>
 </resources>
