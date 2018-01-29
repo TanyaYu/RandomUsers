@@ -1,8 +1,22 @@
 <resources>
+    <dimen name="fab_elevation">4dp</dimen>
+    <dimen name="fab_press_translation_z">6dp</dimen>
+    <dimen name="btn_action_back_size">46dp</dimen>
+    <dimen name="btn_action_back_padding">6dp</dimen>
+
     <dimen name="user_item_height">130dp</dimen>
     <dimen name="user_item_margin">2dp</dimen>
     <dimen name="user_item_name_text_size">16sp</dimen>
     <dimen name="user_item_name_text_padding">2dp</dimen>
 
-    <dimen name="user_browse_text_size">20sp</dimen>
+    <dimen name="activity_details_photo_size">120dp</dimen>
+    <dimen name="activity_details_name_text_size">35sp</dimen>
+    <dimen name="activity_details_fab_margin">16dp</dimen>
+    <dimen name="activity_details_icon_size">26sp</dimen>
+    <dimen name="activity_details_inner_padding">16dp</dimen>
+    <dimen name="activity_details_content_padding">16dp</dimen>
+    <dimen name="activity_details_top_padding">26dp</dimen>
+    <dimen name="activity_details_bottom_padding">86dp</dimen>
+    <dimen name="activity_details_text_size">17sp</dimen>
+
 </resources>

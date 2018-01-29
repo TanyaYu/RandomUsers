@@ -11,136 +11,186 @@
             type="com.example.tanyayuferova.randomusers.entity.User" />
     </data>
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <!-- Full name -->
-            <TextView
-                android:id="@+id/fullName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text='@{user.fullName+ " (" + user.nationality +")"}'
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-        </LinearLayout>
-        <!-- Photo -->
-        <ImageView
-            android:id="@+id/photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            app:error="@{@drawable/ic_empty_user}"
-            app:imageUrl="@{user.photoLarge}" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:orientation="vertical">
-
-            <!-- Email -->
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/activity_details_bottom_padding"
+                android:paddingEnd="@dimen/activity_details_content_padding"
+                android:paddingStart="@dimen/activity_details_content_padding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_photo"
+                    android:layout_width="@dimen/activity_details_photo_size"
+                    android:layout_height="@dimen/activity_details_photo_size"
+                    android:layout_marginTop="@dimen/activity_details_top_padding"
+                    app:error="@{@drawable/ic_empty_user}"
+                    app:imageUrl="@{user.photoLarge}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_empty_user" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_name"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:text="@string/User.email"
-                    android:textSize="@dimen/user_browse_text_size"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="@dimen/activity_details_inner_padding"
+                    android:fontFamily="sans-serif-thin"
+                    android:gravity="bottom|center"
+                    android:text='@{user.fullName+ " (" + user.nationality +")"}'
+                    android:textAlignment="center"
+                    android:textSize="@dimen/activity_details_name_text_size"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_photo"
+                    tools:text="Paul McCartney (UK)" />
+
+                <ImageView
+                    android:id="@+id/iv_email"
+                    android:layout_width="@dimen/activity_details_icon_size"
+                    android:layout_height="@dimen/activity_details_icon_size"
+                    android:layout_marginTop="@dimen/activity_details_inner_padding"
+                    android:contentDescription="@string/image_email"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name"
+                    app:srcCompat="@drawable/ic_email_dark" />
 
                 <TextView
-                    android:id="@+id/email"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_email"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:clickable="true"
-                    android:onClick="emailOnClick"
+                    android:layout_marginLeft="@dimen/activity_details_inner_padding"
+                    android:layout_marginStart="@dimen/activity_details_inner_padding"
+                    android:gravity="center_vertical"
                     android:text="@{user.email}"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/user_browse_text_size" />
-            </LinearLayout>
+                    android:textSize="@dimen/activity_details_text_size"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_email"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_email"
+                    app:layout_constraintTop_toTopOf="@id/iv_email"
+                    tools:text="paul.mccartney@example.com" />
 
-            <!-- Telephone -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:text="@string/User.phone"
-                    android:textSize="@dimen/user_browse_text_size"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp">
-
-                    <TextView
-                        android:id="@+id/phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{user.phone}"
-                        android:textSize="@dimen/user_browse_text_size" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:contentDescription="@string/openDialerDescription"
-                        android:onClick="openDialer"
-                        app:srcCompat="@drawable/ic_call"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Location -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp">
+                <ImageView
+                    android:id="@+id/iv_phone"
+                    android:layout_width="@dimen/activity_details_icon_size"
+                    android:layout_height="@dimen/activity_details_icon_size"
+                    android:layout_marginTop="@dimen/activity_details_inner_padding"
+                    android:contentDescription="@string/image_phone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_email"
+                    app:srcCompat="@drawable/ic_phone_dark" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_phone"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:text="@string/User.location"
-                    android:textSize="@dimen/user_browse_text_size"
-                    android:textStyle="bold" />
+                    android:layout_marginLeft="@dimen/activity_details_inner_padding"
+                    android:layout_marginStart="@dimen/activity_details_inner_padding"
+                    android:gravity="center_vertical"
+                    android:text="@{user.phone}"
+                    android:textSize="@dimen/activity_details_text_size"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_phone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_phone"
+                    app:layout_constraintTop_toTopOf="@id/iv_phone"
+                    tools:text="(478)-67-5634" />
+
+                <ImageView
+                    android:id="@+id/iv_location"
+                    android:layout_width="@dimen/activity_details_icon_size"
+                    android:layout_height="@dimen/activity_details_icon_size"
+                    android:layout_marginTop="@dimen/activity_details_inner_padding"
+                    android:contentDescription="@string/image_location"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_phone"
+                    app:srcCompat="@drawable/ic_location_dark" />
 
                 <TextView
-                    android:id="@+id/location"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_location"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
+                    android:layout_marginLeft="@dimen/activity_details_inner_padding"
+                    android:layout_marginStart="@dimen/activity_details_inner_padding"
+                    android:gravity="center_vertical"
                     android:text="@{user.location.fullDescription}"
-                    android:textSize="@dimen/user_browse_text_size" />
-            </LinearLayout>
-        </LinearLayout>
+                    android:textSize="@dimen/activity_details_text_size"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_location"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_location"
+                    app:layout_constraintTop_toTopOf="@id/iv_location"
+                    tools:text="677 Pockrus Page Rd, Fullerton, New York, 40567" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <!-- Send user info button -->
-            <Button
-                android:id="@+id/sendUserInfoBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="sendUserInfoBtnOnClick"
-                android:text="@string/sendUserInfo" />
-        </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
 
-    </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/activity_details_fab_margin"
+            android:layout_marginEnd="@dimen/activity_details_fab_margin"
+            android:layout_marginRight="@dimen/activity_details_fab_margin"
+            android:contentDescription="@string/action_share"
+            android:elevation="@dimen/fab_elevation"
+            android:onClick="shareBtnOnClick"
+            android:scaleType="center"
+            app:fabSize="normal"
+            app:pressedTranslationZ="@dimen/fab_press_translation_z"
+            app:srcCompat="@drawable/ic_share_light" />
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginBottom="@dimen/activity_details_fab_margin"
+            android:layout_marginLeft="@dimen/activity_details_fab_margin"
+            android:layout_marginStart="@dimen/activity_details_fab_margin"
+            android:contentDescription="@string/action_send_email"
+            android:elevation="@dimen/fab_elevation"
+            android:onClick="emailBtnOnClick"
+            android:scaleType="center"
+            app:fabSize="normal"
+            app:pressedTranslationZ="@dimen/fab_press_translation_z"
+            app:srcCompat="@drawable/ic_email_light" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="@dimen/activity_details_fab_margin"
+            android:contentDescription="@string/action_call"
+            android:elevation="@dimen/fab_elevation"
+            android:onClick="openDialer"
+            android:scaleType="center"
+            app:fabSize="normal"
+            app:pressedTranslationZ="@dimen/fab_press_translation_z"
+            app:srcCompat="@drawable/ic_phone_light" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/btn_action_back_size"
+            android:layout_height="@dimen/btn_action_back_size"
+            android:layout_gravity="start|top"
+            android:contentDescription="@string/action_back"
+            android:onClick="backBtnOnClick"
+            android:padding="@dimen/btn_action_back_padding"
+            app:srcCompat="@drawable/ic_arrow_back_dark" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

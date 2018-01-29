@@ -9,4 +9,14 @@
     <string name="openDialerDescription">Open dialer</string>
     <string name="sendUserInfo">Send user info</string>
     <string name="image_user_photo">User photo</string>
+    <string name="image_location">Location</string>
+    <string name="image_email">Email</string>
+    <string name="image_phone">Phone number</string>
+    <string name="action_send_email">Send an email</string>
+    <string name="action_call">Call</string>
+    <string name="action_share">Share</string>
+    <string name="action_back">Back</string>
+    <string name="email_subject">Subject</string>
+    <string name="email_content">Content</string>
+    <string name="email_send">Send email</string>
 </resources>
